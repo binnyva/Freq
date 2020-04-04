@@ -14,46 +14,45 @@ while($check_date < time()) { // Run for all the days that it was not ran on.
 	foreach ($tasks as $t) {
 		if(in_array($t['id'], $existing_event_tasks)) continue; // Event exists from last run. Don't add again.
 
-		if($t['frequency'] == 'month') {
-			$all_day = explode(",", $t['day']);
-			$all_weekday = explode(",", $t['weekday']);
-			$all_month = explode(",", $t['month']);
+		$all_day = explode(",", $t['day']);
+		$all_weekday = explode(",", $t['weekday']);
+		$all_month = explode(",", $t['month']);
 
+		$match = false;
+		foreach ($all_day as $day) {
+			if($day == '*' or $day == date('j', $check_date)) {
+				$match = true;
+			}
+		}
+
+		if($match) {
 			$match = false;
-			foreach ($all_day as $day) {
-				if($day == '*' or $day == date('j', $check_date)) {
+			foreach ($all_weekday as $weekday) {
+				// 0 is sunday, 6 is saturday.
+				if($weekday == '*' or $weekday == date('w', $check_date)) {
 					$match = true;
 				}
 			}
+		}
 
-			if($match) {
-				$match = false;
-				foreach ($all_weekday as $weekday) {
-					if($weekday == '*' or $weekday == date('w', $check_date)) {
-						$match = true;
-					}
+		if($match) {
+			$match = false;
+			foreach ($all_month as $month) {
+				if($month == '*' or $month == date('n', $check_date)) {
+					$match = true;
 				}
 			}
+		}
 
-			if($match) {
-				$match = false;
-				foreach ($all_month as $month) {
-					if($month == '*' or $month == date('n', $check_date)) {
-						$match = true;
-					}
-				}
-			}
-
-			if($match) {
-				print "Task : " . $t['name'] . "\n";
-				
-				$sql->insert("Event", array(
-						'task_id' => $t['id'],
-						'todo_on' => 'NOW()',
-						'status'  => '0',
-					));
-				$insert_count++;
-			}
+		if($match) {
+			print "Task : " . $t['name'] . "<br />\n";
+			
+			$sql->insert("Event", array(
+					'task_id' => $t['id'],
+					'todo_on' => 'NOW()',
+					'status'  => '0',
+				));
+			$insert_count++;
 		}
 	}
 

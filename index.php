@@ -1,6 +1,5 @@
 <?php
-require("./common.php");
+require('./common.php');
 
-$message = "Hello World";
-
-render();
+$crud = new iframe\iframe\Crud("Task");
+$crud->render();

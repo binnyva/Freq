@@ -1,2 +1,5 @@
 <?php
-require('/var/www/html/iframe/common.php');
+require('/mnt/x/Data/www/iframe2/iframe-skeleton/common.php');
+require('/mnt/x/Data/www/iframe2/iframe-skeleton/includes/backward-compatible.php');
+
+setupBackwardCompatibility();

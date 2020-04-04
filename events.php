@@ -20,8 +20,8 @@ $tasks = $sql->getAll("SELECT E.id,T.name, E.todo_on, E.done_on FROM Event E INN
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Task</title>
-<link href="http://localhost/Projects/Freq/css/style.css" rel="stylesheet" type="text/css" />
-<link href="http://localhost/Projects/Freq/images/silk_theme.css" rel="stylesheet" type="text/css" />
+<link href="http://localhost/Projects/Freq/assets/css/style.css" rel="stylesheet" type="text/css" />
+<link href="http://localhost/Projects/Freq/assets/images/silk_theme.css" rel="stylesheet" type="text/css" />
 <link href="http://localhost/Projects/Freq/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="http://localhost/Projects/Freq/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 </head>
@@ -36,8 +36,8 @@ $tasks = $sql->getAll("SELECT E.id,T.name, E.todo_on, E.done_on FROM Event E INN
 <?php foreach($tasks as $t) {?>
 <tr>
 <td><?php echo $t['name'] ?></td>
-<td><a class="icon done" href="events.php?action=toggle_status&amp;task_id=<?php echo $t['id'] ?>">Done</a></td>
-<td><a class="icon delete confirm" href="events.php?action=delete&amp;task_id=<?php echo $t['id'] ?>">Delete</a></td>
+<td><a class="icon icon-done" href="events.php?action=toggle_status&amp;task_id=<?php echo $t['id'] ?>">Done</a></td>
+<td><a class="icon icon-delete confirm" href="events.php?action=delete&amp;task_id=<?php echo $t['id'] ?>">Delete</a></td>
 </tr>
 <?php } ?>
 </table>

@@ -1,7 +1,7 @@
 <?php
 //Configuration file for Freq
-$config = array(
-	'site_title'	=>	'Freq',
+return array(
+	'app_name'		=>	'Freq',
 	'db_host'		=>	'localhost',
 	'db_user'		=>	'root',
 	'db_password'	=>	'',

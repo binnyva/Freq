@@ -24,7 +24,7 @@
 <?php 
 /////////////////////////////////// The Template file will appear here ////////////////////////////
 
-include($GLOBALS['template']->template); 
+include(iframe\App::$template->template);
 
 /////////////////////////////////// The Template file will appear here ////////////////////////////
 ?>
