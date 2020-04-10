@@ -1,18 +1,30 @@
 <?php
 require('../common.php');
 
-$tasks = $sql->getAll("SELECT * FROM Task WHERE status='1'");
-$existing_event_tasks = $sql->getCol("SELECT task_id FROM Event WHERE status='0'");
+/* Logic:
+ * Create new event only if there is no existing undone event of the same task.
+ * 
+ */
+
+ // Consider using this to parse: https://github.com/dragonmantank/cron-expression
+
+$tasks = $sql->getById("SELECT * FROM Task WHERE status='1'");
+// dump($tasks);
+
+// Cron last run on time...
 $last_ran_on = $sql->getOne("SELECT DATE_FORMAT(ran_on, '%Y-%m-%d') AS ran_on FROM Log ORDER BY ran_on DESC LIMIT 0,1");
 if($last_ran_on) $check_date = strtotime($last_ran_on);
 else $check_date = strtotime('yesterday');
+
+// Un-done tasks OR  Events marked done the day this cron was run.
+$existing_event_tasks = $sql->getCol("SELECT task_id FROM Event WHERE status='0' OR (status='1' AND DATE(done_on) = DATE(NOW()) )");
 
 $run_count = 0;
 while($check_date < time()) { // Run for all the days that it was not ran on.
 	$insert_count = 0;
 
-	foreach ($tasks as $t) {
-		if(in_array($t['id'], $existing_event_tasks)) continue; // Event exists from last run. Don't add again.
+	foreach ($tasks as  $task_id => $t) {
+		// if(in_array($task_id, $existing_event_tasks)) continue; // Event exists from last run. Don't add again.
 
 		$all_day = explode(",", $t['day']);
 		$all_weekday = explode(",", $t['weekday']);
@@ -20,8 +32,11 @@ while($check_date < time()) { // Run for all the days that it was not ran on.
 
 		$match = false;
 		foreach ($all_day as $day) {
-			if($day == '*' or $day == date('j', $check_date)) {
-				$match = true;
+			if($day == '*' or $day == date('j', $check_date)) { // Daily task should be only inserted if...
+				if(date('Y-m-d', $check_date) === date('Y-m-d') // its for today(so as not to insert for every day from the last time it was run.)
+					and !in_array($task_id, $existing_event_tasks)) {  // and its not already inserted.
+						$match = true;
+				}
 			}
 		}
 
@@ -48,7 +63,7 @@ while($check_date < time()) { // Run for all the days that it was not ran on.
 			print "Task : " . $t['name'] . "<br />\n";
 			
 			$sql->insert("Event", array(
-					'task_id' => $t['id'],
+					'task_id' => $task_id,
 					'todo_on' => 'NOW()',
 					'status'  => '0',
 				));

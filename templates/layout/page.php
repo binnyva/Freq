@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html><head>
-<title><?php echo $config['site_title'] ?></title>
-<link href="<?php echo $config['site_url'] ?>css/style.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $config['site_url'] ?>images/silk_theme.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $config['site_url'] ?>bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $config['site_url'] ?>bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+<title><?php echo $config['app_name'] ?></title>
+<link href="<?php echo $config['app_url'] ?>assets/css/common.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $config['app_url'] ?>assets/images/silk_theme.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $config['app_url'] ?>bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $config['app_url'] ?>bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
 <?php echo $css_includes ?>
 </head>
 <body>
 <div id="loading">loading...</div>
 <div id="header">
-<h1 id="logo"><a href="<?php echo $config['home_url']; ?>"><?php echo $config['site_title'] ?></a></h1>
+<h1 id="logo"><a href="<?php echo $config['app_url']; ?>"><?php echo $config['app_name'] ?></a></h1>
 </div>
 
 <div id="content">
@@ -33,9 +33,9 @@ include(iframe\App::$template->template);
 
 <div id="footer">An <a href="http://www.bin-co.com/php/scripts/iframe/">iFrame</a> Application</div>
 
-<script src="<?php $config['site_url'] ?>bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-<script src="<?php $config['site_url'] ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="<?php $config['site_url'] ?>js/application.js" type="text/javascript"></script>
+<script src="<?php $config['app_url'] ?>bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="<?php $config['app_url'] ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<?php $config['app_url'] ?>js/common.js" type="text/javascript"></script>
 <?php echo $js_includes ?>
 </body>
 </html>
