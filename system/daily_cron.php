@@ -17,7 +17,7 @@ if($last_ran_on) $check_date = strtotime($last_ran_on);
 else $check_date = strtotime('yesterday');
 
 // Un-done tasks OR  Events marked done the day this cron was run.
-$existing_event_tasks = $sql->getCol("SELECT task_id FROM Event WHERE status='0' OR (status='1' AND DATE(done_on) = DATE(NOW()) )");
+$existing_event_tasks = $sql->getCol("SELECT task_id FROM Event WHERE status='0' OR (status='1' AND DATE(todo_on) = DATE(NOW()) )");
 
 $run_count = 0;
 while($check_date < time()) { // Run for all the days that it was not ran on.

@@ -89,3 +89,8 @@ ul.horizontal li {
 #content {
 	margin-top: 70px;
 }
+#footer {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
