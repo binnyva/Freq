@@ -3,11 +3,12 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><?php echo $config['app_name'] ?></title>
+<title><?php echo iapp('config')['app_name'] ?></title>
 <link href="<?php echo iapp('config')['app_url'] ?>assets/css/common.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo iapp('config')['app_url'] ?>assets/images/silk_theme.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo iapp('config')['app_url'] ?>bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo iapp('config')['app_url'] ?>bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo iapp('config')['app_url'] ?>node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<!-- <link href="<?php echo iapp('config')['app_url'] ?>node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" /> -->
+<link href="<?php echo iapp('config')['app_url'] ?>assets/css/bootstrap-darkly.min.css" rel="stylesheet" type="text/css" />
 <?php echo $css_includes ?>
 </head>
 <body>
@@ -28,9 +29,9 @@ include(iframe\App::$template->template);
 <!-- End Content -->
 </div>
 
-<script src="<?php $config['app_url'] ?>bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-<script src="<?php $config['app_url'] ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="<?php $config['app_url'] ?>js/common.js" type="text/javascript"></script>
+<script src="<?php iapp('config')['app_url'] ?>node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="<?php iapp('config')['app_url'] ?>node_modules/bootstrap/dist/	js/bootstrap.min.js"></script>
+<script src="<?php iapp('config')['app_url'] ?>assets/js/common.js" type="text/javascript"></script>
 <?php echo $js_includes ?>
 </body>
 </html>

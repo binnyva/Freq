@@ -8,16 +8,16 @@ require('../common.php');
 
  // Consider using this to parse: https://github.com/dragonmantank/cron-expression
 
-$tasks = $sql->getById("SELECT * FROM Task WHERE status='1'");
+$tasks = iapp('db')->getById("SELECT * FROM Task WHERE status='1'");
 // dump($tasks);
 
 // Cron last run on time...
-$last_ran_on = $sql->getOne("SELECT DATE_FORMAT(ran_on, '%Y-%m-%d') AS ran_on FROM Log ORDER BY ran_on DESC LIMIT 0,1");
+$last_ran_on = iapp('db')->getOne("SELECT DATE_FORMAT(ran_on, '%Y-%m-%d') AS ran_on FROM Log ORDER BY ran_on DESC LIMIT 0,1");
 if($last_ran_on) $check_date = strtotime($last_ran_on);
 else $check_date = strtotime('yesterday');
 
 // Un-done tasks OR  Events marked done the day this cron was run.
-$existing_event_tasks = $sql->getCol("SELECT task_id FROM Event WHERE status='0' OR (status='1' AND DATE(todo_on) = DATE(NOW()) )");
+$existing_event_tasks = iapp('db')->getCol("SELECT task_id FROM Event WHERE status='0' OR (status='1' AND DATE(todo_on) = DATE(NOW()) )");
 
 $run_count = 0;
 while($check_date < time()) { // Run for all the days that it was not ran on.
@@ -62,7 +62,7 @@ while($check_date < time()) { // Run for all the days that it was not ran on.
 		if($match) {
 			print "Task : " . $t['name'] . "<br />\n";
 			
-			$sql->insert("Event", array(
+			iapp('db')->insert("Event", array(
 					'task_id' => $task_id,
 					'todo_on' => 'NOW()',
 					'status'  => '0',
@@ -71,7 +71,7 @@ while($check_date < time()) { // Run for all the days that it was not ran on.
 		}
 	}
 
-	$sql->insert("Log", array('ran_on'=>'NOW()','insert_count'=>$insert_count));
+	iapp('db')->insert("Log", array('ran_on'=>'NOW()','insert_count'=>$insert_count));
 	$check_date = strtotime("+1 day", $check_date);
 	$run_count++;
 

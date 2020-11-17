@@ -12,4 +12,12 @@
 <?php } ?>
 </table>
 
-<div id="footer"><a href="system/daily_cron.php">Run Cron Job</a></div>
+<form action="" method="post" id="tasks-area">
+<textarea name="tasks" id="tasks" class="form-control" rows="5" placeholder="Enter Tasks for today..."></textarea>
+<input type="submit" name="action" class="btn btn-primary" value="Save" />
+</form>
+
+<div id="footer">
+	<a href="system/daily_cron.php">Run Cron Job</a> |
+	<a href="#" id="add-tasks">Add Tasks</a>
+</div>
