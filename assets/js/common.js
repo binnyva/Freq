@@ -31,4 +31,4 @@ function siteInit() {
 	if(window.init && typeof window.init == "function") init(); //If there is a function called init(), call it on load
 }
 $ = jQuery.noConflict();
-jQuery(window).load(siteInit);
+jQuery(window).ready(siteInit);

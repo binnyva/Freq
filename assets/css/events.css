@@ -1,3 +1,39 @@
-#tasks-area {
+#tasks-area, #intention-area {
 	display: none;
+	padding: 20px;
+}
+.tab-footer {
+	position: fixed;
+	bottom: 0;
+	right: 5px;
+}
+.achieved {
+	text-decoration: line-through;
+}
+.intention {
+	position: relative;
+	text-align: center;
+}
+.intention .icon {
+	position: absolute;
+	display: none;
+}
+.intention.pending:hover .icon {
+	display: inline;
+}
+
+.priority-1 {
+	font-size: 2em;
+}
+.priority-2 {
+	font-size: 1.6em;
+}
+.priority-3 {
+	font-size: 1.4em;
+}
+.priority-4 {
+	font-size: 1.2em;
+}
+.priority-5 {
+	font-size: 1em;
 }
