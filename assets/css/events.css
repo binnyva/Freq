@@ -37,3 +37,22 @@
 .priority-5 {
 	font-size: 1em;
 }
+
+#goal-list ul {
+	margin: 0;
+	padding: 0;
+	list-style:  none;
+	display: inline;
+}
+#goal-list li {
+	font-size: .7em;
+	padding: 0;
+	display: inline;
+}
+#goal-list li:after {
+	content: " | ";
+	color: #aaa;
+}
+#goal-list li:last-child {
+	content: "";
+}

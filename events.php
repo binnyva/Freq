@@ -37,16 +37,22 @@ if($action == 'Add Intention') {
 	$intentions = explode("\n", i($QUERY, 'intention'));
 	$insert_count = 0;
 
-	$existing_intentions = iapp('db')->getAll("SELECT id,name FROM Intention WHERE DATE(added_on)=DATE(NOW())");
+	$existing_intentions = iapp('db')->getAll("SELECT id,name FROM Intention WHERE DATE(added_on)=DATE(NOW()) AND priority > 0");
 	$priority = count($existing_intentions) + 1;
 
-	foreach($intentions as $intent) {
-		$intent = trim($intent);
-		if(!$intent) continue;
+	foreach($intentions as $line) {
+		$line = trim($line);
+		if(!$line) continue;
+
+		preg_match('/(\d*)(\W*)(.+)/', $line, $matches);
+		$goal_id = $matches[1];
+		$intent = $matches[3];
+		if(!$goal_id) $goal_id = 0;
 
 		iapp('db')->insert("Intention", [
 			'priority'	=> $priority,
 			'name'		=> $intent,
+			'goal_id'	=> $goal_id,
 			'added_on'	=> 'NOW()',
 		]);
 		$insert_count++;
@@ -57,15 +63,15 @@ if($action == 'Add Intention') {
 
 if($action === 'achive_intention') {
 	$intention_id = i($QUERY, 'intention_id', 0);
-	iapp('db')->update("Intention", ['achieved_on' => 'NOW()'], "id=$intention_id");
+	iapp('db')->update("Intention", ['done_on' => 'NOW()'], "id=$intention_id");
 	$QUERY['success'] = 'Marked as done';
 }
-
 
 $tasks = iapp('db')->getAll("SELECT E.id,T.id AS task_id, T.name,T.description, E.todo_on, E.done_on 
 							FROM Event E INNER JOIN Task T ON E.task_id=T.id WHERE E.status='0'");
 $one_times = iapp('db')->getAll("SELECT id,task_id,name, todo_on, done_on, '' AS description
 							FROM Event WHERE status='0' AND type='one-time'");
+$goals = iapp('db')->getAll("SELECT id,name FROM Goal");
 $tasks = array_merge($tasks, $one_times);
 
 // Think of a day as 5 AM today to almost 5 AM tomorrow.
@@ -76,8 +82,8 @@ if(date('Y-m-d H:i:s') < $from_time) { // If time is over 12 midnight and less t
 	$to_time = date('Y-m-d 04:59:59');
 }
 
-$intentions = iapp('db')->getAll("SELECT id,name,priority,achieved_on FROM Intention 
-									WHERE added_on BETWEEN '$from_time' AND '$to_time'
+$intentions = iapp('db')->getAll("SELECT id,name,priority,done_on FROM Intention 
+									WHERE added_on BETWEEN '$from_time' AND '$to_time' AND priority > 0
 									ORDER BY priority ASC");
 
 iapp('template')->render();

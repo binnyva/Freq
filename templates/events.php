@@ -37,7 +37,7 @@
   <div class="tab-pane fade" id="intention-pane" role="tabpanel" aria-labelledby="intention-tab">
   	<?php foreach ($intentions as $intent) { 
   		$achived = 'pending';
-  		if($intent['achieved_on']) $achived = 'achieved';
+  		if($intent['done_on']) $achived = 'achieved';
   		?>
   		<div class="priority-<?=$intent['priority'] . ' ' . $achived ?> intention ">
   			<span class="intent"><?=$intent['name']?></span>
@@ -47,13 +47,23 @@
 
   	<?php if(count($intentions)) { ?>
   	<div class="tab-footer">
-		<a href="#" id="add-intention">Add Another Intention</a>
+		<a href="#" id="add-intention">Add Another Intention</a> | 
+		<a href="intentions.php" target="_blank">List of Intention</a>
 	</div>
 	<?php } ?>
 
 	<form action="" method="post" id="intention-area">
 	<textarea name="intention" id="intention" class="form-control" rows="3" placeholder="Enter Intention for today..."></textarea>
 	<input type="submit" name="action" class="btn btn-primary" value="Add Intention" />
+
+	<div id="goal-list">
+	<strong>Goals: </strong>
+	<ul><?php foreach($goals as $g) {
+		echo "<li>{$g['id']}. {$g['name']}</li>";
+	} ?></ul>
+	</div>
+
 	</form>
+
   </div>
 </div>
